@@ -1,0 +1,24 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+<form action="{% url 'polls:index' %}" method="POST">{% csrf_token %}
+    <input type="text" name="questao" placeholder="Digite sua questão">
+    <br>
+    <br>
+    <input type="submit">
+</form>
+<form action="{% url 'polls:index' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit">Deletar</button>
+</form>
